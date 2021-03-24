@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+ 
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>Frontend Mentor | Profile card component</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    /* .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); } */
+  
+    .content{
+      background-color: hsl(185, 75%, 39%);
+      height: 100vh;
+      width: 100%;
+      font-family: 'Kumbh Sans', sans-serif;
+      
+    }
+    .card-container{
+      margin: 0 auto;
+      width: calc(100% - 50px);
+      max-width: 400px;
+      max-width: 325px;
+      min-height: 400px;
+      text-align: center;
+      border-radius: 15px;
+      background-color:  #ffffff;
+      
+    }
+
+    .card-header{
+      position: relative;
+      background-image: url(/images/bg-pattern-card.svg);
+      background-position: center;
+      background-size: contain;
+      height: 130px;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px; 
+    }
+   
+    .card-header-image{
+      position: absolute;
+      left:50%;
+      top:75px;
+      border: 5px solid #fff;
+      border-radius: 50%;
+      transform: translateX(-50%)
+    }
+    .card-content{
+      padding-top: 70px;
+      color: #000000;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .second-text{
+      font-size: 14px;
+    }
+    .text-gray{
+      color:  hsl(0, 0%, 59%);
+      font-weight: 400;
+    }
+
+    .card-footer{
+      border-top: 1px solid hsl(0, 0%, 59%);
+      padding-top: 10px;
+      font-size: 18px;
+    }
+    .card-footer ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .card-footer ul li{
+      flex-basis: 30%;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-footer ul li span{
+      color:  hsl(0, 0%, 59%);
+      font-size: 11px;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+
+    <div class="card-container">
+      <div class="card-header">
+        <img class="card-header-image" src="images/image-victor.jpg" />
+      </div>
+      <div class="card-content">
+          <p>Victor Crest <span class="text-gray">26</span></p>
+          <p class="second-text text-gray">London </p>
+      </div>
+      <div class="card-footer">
+          <ul >
+            <li>80K <span>Followers</span>  </li>
+            <li>803K <span>Likes</span></li>
+            <li>1.4 <span>Photos</span></li>
+          </ul>
+      </div>
+    </div>
+    
+  </div>
+
+</body>
+</html>
