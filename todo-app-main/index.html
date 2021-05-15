@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <title>Todo app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: 'Josefin Sans', sans-serif;
+        
+      }
+
+      /** Light  **/
+      .main {
+        background-color:  hsl(236, 33%, 92%);
+        height: 100vh;
+        width: 100%; 
+        position: relative;
+      }
+
+      .header {
+        height: 200px;
+        position: relative;
+        background-image: url(./images/bg-mobile-light.jpg);
+        background-size: contain ;
+        padding-left: 25px ;
+        padding-right: 25px ;
+        background-repeat: no-repeat;
+      }
+
+      .header-title{
+        color: #fff;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 50px;
+        margin-bottom: 30px;
+        font-size: 18px;
+        letter-spacing: 10px;
+      }
+
+      .theme-mode{
+        width: 20px;
+        height: 20px;
+        border: none;
+        background: transparent;
+        outline: none;
+        cursor: pointer;
+      }
+
+   
+      .theme-mode {
+        background-image: url(./images/icon-moon.svg);
+        background-size: contain ;
+      }
+
+      .todo-input{
+        height: 45px;
+        background-color: #fff;
+        border: 0;
+        border-radius: 5px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+        padding-left: 10px; 
+      }
+
+      .todo-input::before{
+        position: absolute;
+        content: '';
+        border : 1px solid hsl(236, 33%, 92%);
+        left: 20px; 
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+      }
+
+      .todo-input > input {
+        height: 100%;
+        border: none;
+        padding-left: 40px; 
+        outline: none;
+      }
+
+      .todo-list-container{
+        position: absolute;
+        border-radius: 5px;
+        top: 170px;
+        left: 25px;
+        right: 25px;
+      }
+
+      .todo-item{
+        height: 50px;
+        border-bottom:1px solid hsl(233, 11%, 84%);
+        background-color: #fff;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px; 
+        position: relative;
+      }
+      .todo-item:first-child{
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      .todo-item-footer{
+        height: 45px;
+        background-color: #fff;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px; 
+        margin-bottom: 10px;
+        font-size: 12px;
+        font-weight: 700;
+        color:  hsl(236, 9%, 61%);
+      }
+
+      .todo-menu{
+        background-color: #fff;
+        margin-top: 15px;
+        border-radius: 5px;
+        color: hsl(236, 9%, 61%)
+      }
+
+      .todo-menu ul {
+        list-style-type: none;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 20px; 
+      }
+
+      .todo-menu ul li{
+       margin: 0 10px;
+      }
+
+      .btn {
+        border :none;
+        background: transparent;
+        color:  hsl(236, 9%, 61%);
+        cursor: pointer;
+        outline: none;
+      }
+
+      .btn.remove-item{
+        background-image: url(./images/icon-cross.svg);
+        height: 14px;
+        width:  15px;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .footer-info{
+        padding-top:40px ;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        color: hsl(236, 9%, 61%)
+      }
+
+      label.done{
+        text-decoration: line-through;
+      }
+
+      .selected {
+        color: hsl(220, 98%, 61%);
+        font-weight: 700;
+      }
+
+    /* DARK MODE */
+    .main.dark{
+      background-color: hsl(235, 21%, 11%) ;/* #181824;*/
+    }
+
+    .main.dark .header{
+      background-image: url(./images/bg-mobile-dark.jpg);
+    }
+
+    .main.dark .theme-mode{
+      background-image: url(./images/icon-sun.svg);
+      background-size: contain ;
+    }
+
+    .main.dark .todo-input,
+    .main.dark .todo-input > input,
+    .main.dark .todo-item,
+    .main.dark .todo-item-footer,
+    .main.dark .todo-menu {
+      background-color:  hsl(235, 24%, 19%);
+      color: hsl(234, 39%, 85%)
+    }
+
+    .main.dark .todo-item{
+   
+     border-bottom: 1px solid hsl(234, 39%, 85%)
+    }
+
+    .main.dark .todo-item-footer, 
+    .main.dark .todo-menu{
+      color:  hsl(237, 14%, 26%);
+    }
+
+
+/* CUSTOM CHECHBOX */
+
+    .todo-item input{
+      position: absolute;
+      cursor: pointer;
+      opacity: 0;
+   
+    }
+
+    .todo-item span{
+      display: inline-block;
+      height: 17px;
+      width: 17px;
+      border :1px solid  hsl(234, 39%, 85%);
+      border-radius: 50%;
+    }
+
+    .todo-item input:checked ~ span{
+      background-image: url(./images/icon-check.svg), linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+      background-size: contain;
+      background-repeat: no-repeat;
+      border-radius: 50%;
+
+    }
+
+    @media screen and (min-width: 376px){
+
+      .main{
+        position: relative;
+      }
+      
+      .header-title, .todo-input{
+        margin: 0 auto;
+        width: 500px;
+      }
+
+      .header-title{
+        padding-bottom: 50px;
+      }
+
+      .header{
+        background-image: url(./images/bg-desktop-light.jpg);
+        height: 300px;
+        width: 100%;
+        background-size: auto;
+        padding-right: 0;
+        padding-left: 0;
+
+      }
+
+      .main.dark .header {
+        height: 300px;
+        background-image: url(./images/bg-desktop-dark.jpg);
+        
+      }
+
+
+      .todo-list-container{
+        margin: 0 auto;
+        width: 500px;
+        top:255px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="main dark">
+    <section class="header">
+      <div class="header-title">
+        <h1>TODO</h1> 
+        <button class="theme-mode "> </button>
+      
+      </div>
+      <div  class="todo-input">
+        <input type="text"  placeholder="Create a new todo..." id="new-todo"/>
+      </div>
+    </section>
+
+    <section class="todo-list-container">
+     <div class="todo-list-items"></div>
+      <div class="todo-item-footer">
+        <span class="todo-count">X items left</span>
+        <button class="btn clea-all" >Clear Completed</button>
+      </div>
+      
+      <div class="todo-menu">
+        <ul class='todo-menu-items'>
+          <li>All</li>
+          <li>Active</li>
+          <li>Completed</li>
+        </ul>
+      </div>
+      <span class="footer-info"> Drag and drop to reorder list</span>
+    </section>
+</div>
+
+<script>
+  let taskShow = 'all'
+  let todoList = [
+    {
+      label :"test 1",
+      isDone : false
+    }, 
+    {
+      label :"test 2",
+      isDone : false
+    },
+    {
+      label :"test 3",
+      isDone : true
+    },
+    {
+      label :"test 4",
+      isDone : false
+    },
+    {
+      label :"test 5",
+      isDone : false
+    },
+    {
+      label :"test 6",
+      isDone : false
+    },
+  ]
+  
+
+  const renderTodoItem = (item) => {
+    const div = document.createElement("div")
+    div.classList.add('todo-item')
+
+    const input = document.createElement("input")
+    input.setAttribute("type", "checkbox");
+ 
+    input.onclick = ()=> {
+    
+      item.status = input.checked
+      if(item.status){
+        label.classList.add('done')
+        item.isDone = !item.isDone
+      }else {
+        label.classList.remove('done')
+        item.isDone = false
+      }
+      updateCounter()
+    }
+
+    const label = document.createElement("label")
+    label.textContent = item.label
+
+    const contentInput = document.createElement('div')
+    const span = document.createElement('span')
+    
+    contentInput.append(input,span)
+
+    const button = document.createElement("button")
+    button.classList.add("btn","remove-item")
+    button.addEventListener('click', (e)=> {
+      removeTask(item)
+    })
+
+    if(item.status || item.isDone){
+      input.checked = true
+      label.classList.add('done')
+    }
+   
+    div.append(contentInput, label, button)
+    return div
+  }
+
+  const addTask = (value) =>{
+    todoList.push(
+      {
+        label :value,
+        isDone : false 
+      }
+    )
+    loadTodoList()
+  }
+
+  const removeTask = (element)=> {
+    todoList = todoList.filter((t=> {
+     return t.label !== element.label
+   }))
+   loadTodoList()
+  }
+
+ const listenCreateTask = () => {
+    inputField = document.getElementById('new-todo')
+  
+    inputField.addEventListener('keyup', (event)=> {
+      if(event.keyCode === 13){
+        if( event.target.value ){
+          addTask(event.target.value)
+          inputField.value = ''
+        }
+      }
+    })
+  }
+
+  const restTask = (parentNode) => {
+    while(parentNode.firstChild){
+      parentNode.removeChild(parentNode.firstChild)
+    }
+  }
+
+ const loadTodoList = () => {
+
+    const todoListContainer = document.getElementsByClassName('todo-list-items')
+    restTask(todoListContainer[0])
+    let renderTodoList = todoList
+    // taskShow
+
+    if(taskShow != 'all'){
+      const state = taskShow === 'active'
+      renderTodoList = todoList.filter((t) => t.isDone === !state)
+    }
+
+    renderTodoList.forEach((item) => {
+      const renderItem = renderTodoItem(item)
+        todoListContainer[0].appendChild(renderItem)
+    })
+
+    updateCounter()
+
+  
+  }
+
+  const updateCounter = () => { 
+    const nbActive = todoList.filter(t => t.isDone === false).length
+    document.getElementsByClassName('todo-count')[0].innerHTML = `${nbActive} item${nbActive>1 ?'s':'' } left`
+  }
+
+  const clearCssFilterClass = () => {
+    const filterMenu = document.getElementsByClassName('todo-menu-items')
+    for( item of filterMenu[0].children){
+      item.classList.remove('selected')
+    }
+  }
+  const filterTask = () => {
+    const filterMenu = document.getElementsByClassName('todo-menu-items')
+  
+    for( item of filterMenu[0].children){
+      
+      if(taskShow == item.innerText.toLowerCase()){
+        item.classList.add('selected')
+      }
+
+      item.addEventListener('click', (e)=> {
+        clearCssFilterClass()
+        e.target.classList.add('selected')
+        taskShow = e.target.innerText.toLowerCase()
+        loadTodoList()
+      })
+    }
+  }
+
+
+  const clearCompleted = () => {
+    const clearBtn = document.getElementsByClassName('btn clea-all');
+    clearBtn[0].addEventListener('click',  (e) => {
+
+      todoList.map((t) => {
+        t.isDone =false
+        t.status = false
+        return t  
+      })
+    
+      loadTodoList()
+    })
+  }
+
+  const changeThemeMode = ( ) => {
+    const themeModeBtn = document.getElementsByClassName('theme-mode')[0];
+    const mainContent =  document.getElementsByClassName('main')[0];
+    
+    const THEME_MODE = Object.freeze({
+      LIGHT: 'light',
+      DARK: 'dark'
+    })
+
+    themeModeBtn.addEventListener('click', (e)=> {
+      const odlMode = mainContent.classList[1].toLowerCase()
+      const newMode = odlMode === THEME_MODE.LIGHT ?  THEME_MODE.DARK : THEME_MODE.LIGHT
+ 
+      mainContent.classList.remove(odlMode)
+      mainContent.classList.add(newMode)
+    })
+     
+  }
+
+  const init = () => { 
+    loadTodoList()
+    listenCreateTask()
+    filterTask()
+    clearCompleted()
+    changeThemeMode()
+  }
+
+
+  init()
+</script>
+</body>
+</html>
