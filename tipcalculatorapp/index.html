@@ -1,73 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
 
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  <link rel="stylesheet" href="https://fonts.google.com/specimen/Space+Mono">
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <link href="reset.css" rel="stylesheet">
+
   <title>Tip calculator app</title>
 
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
-    :root{
+    :root {
       --strong-cyan: hsl(172, 67%, 45%);
-
       --very-dark-cyan: hsl(183, 100%, 15%);
       --dark-grayish-cyan1: hsl(186, 14%, 43%);
       --dark-grayish-cyan2: hsl(184, 14%, 56%);
       --light-grayish-cyan1: hsl(185, 41%, 84%);
       --Light-grayish-cyan2: hsl(189, 41%, 97%);
       --white: hsl(0, 0%, 100%);
-
-      --font-weight400 : 400;
-      --font-weight500 : 500;
-      --font-weight700 : 700;
-
-      --font-size-primary : 24px;
+      --font-weight400: 400;
+      --font-weight500: 500;
+      --font-weight700: 700;
+      --font-size-primary: 24px;
     }
 
     body {
       background-color: var(--light-grayish-cyan1);
-      font-family: "Space Mono" ;
+      font-family: "Space Mono";
+      margin: 0;
+      padding: 0;
     }
 
     .container {
-      width: 700px;
-      padding-top: 160px;
-      margin:  auto;
-      color:var(--dark-grayish-cyan1);
-      text-align:center;
+      padding-top: 50px;
+      color: var(--dark-grayish-cyan1);
+      text-align: center;
+      height: 100vh;
     }
 
     .header-title {
       color: var(--very-dark-cyan);
+      font-weight: var(--font-weight700);
+      margin-bottom: 40px;
+      display: inline-block;
     }
 
-    .content{
+    .content {
       background-color: var(--white);
-      border-radius:20px;
-      text-align:left;
+      text-align: left;
+      border-radius: 15px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .compnt-label{
+    .bill-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bill-content-child {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 35px;
+    }
+
+    .bill-select-tip {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .compnt-label {
       font-size: 12px;
       display: inline-block;
       width: 100%;
       padding-bottom: 10px;
+      font-weight: var(--font-weight400);
     }
 
-    .compnt-input{
-      font-size: 24px;
+    .compnt-sub-label {
+      font-size: 10px;
+      padding: 0;
+    }
+
+    .compnt-input {
+      font-size: var(--font-size-primary);
       text-align: right;
       border: none;
+      border-radius: 5px;
       background-color: var(--Light-grayish-cyan2);
-     
-      color: var(--dark-grayish-cyan1);
-      padding: 10px
+      color: var(--very-dark-cyan);
+
+      padding-right: 10px;
+      width: 95%;
     }
-    .compnt-btn{
+
+    .compnt-btn {
       width: 100%;
       display: flex;
       justify-content: center;
@@ -75,160 +112,184 @@
       height: 40px;
       border: none;
       border-radius: 5px;
-
     }
 
-    @media screen and (max-width:1440px){
+    .bill-btn {
+      flex-grow: 1;
+      max-width: 148px;
+      background-color: var(--very-dark-cyan);
+      color: var(--white);
+      font-weight: var(--font-weight700);
+      font-size: 16px;
+      margin-bottom: 10px;
+      margin-top: 5px
+    }
+
+
+    .custom {
+      background-color: var(--Light-grayish-cyan2);
+      color: var(--very-dark-cyan)
+    }
+
+    .compnt-result-value {
+      font-size: var(--font-size-primary);
+      color: var(--strong-cyan);
+    }
+
+    .tip-content {
+      background-color: var(--very-dark-cyan);
+      border-radius: 15px;
+      padding-top: 45px;
+      padding-right: 35px;
+      padding-left: 35px;
+      padding-bottom: 25px;
+      font-size: 14px;
+    }
+
+    .tip-amount {
+      display: flex;
+      flex-direction: row;
+      padding-bottom: 40px;
+      justify-content: space-between;
+    }
+
+    .tip-label {
+      color: var(--white);
+      padding-bottom: 0;
+    }
+
+    .btn-reset {
+      font-weight: var(--font-weight700);
+      background-color: var(--strong-cyan);
+      text-transform: uppercase;
+    }
+
+    @media screen and (min-width:691px) {
+
       .container {
-      width: 700px;
+        max-width: 700px;
+        margin: auto;
+        padding-top: 160px;
       }
 
       .header-title {
+        text-transform: full-width;
+        margin-bottom: 70px;
       }
 
-      .content{
-        background-color: var(--white);
-        border-radius: 15px;
-        height:370px;
-        display: flex;
-        padding: 25px;
+      .content {
+        height: 370px;
+        flex-direction: row;
         justify-content: space-between;
+        padding: 25px;
       }
-       .content > *{
+
+      .content > * {
         flex-grow: 1;
         max-width: 42%;
-
-      }
-  
-
-      .bill-content{
-        display: flex;
-        flex-direction: column;
       }
 
-      .bill-content-child{
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 35px;
-      }
-
-      .bill-select-tip{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
-
-      .bill-btn{
-        flex-grow: 1;
+      .bill-btn {
         max-width: 85px;
-        background-color: var(--very-dark-cyan);
-        color: var(--white);
-        font-weight: var(--font-weight700);
-        font-size: 16px;
-        margin-bottom: 10px;
-        margin-top:5px
       }
 
-      .custom{
-        background-color: var(--Light-grayish-cyan2);
-        color : var(--very-dark-cyan)
+      .tip-content {
+        position: relative;
       }
 
-      .tip-content{
-        background-color: var(--very-dark-cyan);
-        border-radius:20px;
-        padding-top: 50px;
-        padding-right: 35px;
-        padding-left: 35px;
-        font-size: 14px; 
+      .btn-reset {
+        width: 80%;
+        position: absolute;
+        bottom: 20px;
+        right: 0;
+        left: 35px;
       }
-
-
     }
-
   </style>
 </head>
+
 <body>
   <div class="container">
     <span class="header-title">SPLITTER</span>
     <section class="content">
 
       <div class="bill-content">
-       
         <div class="bill-content-child">
           <span class="compnt-label">
             Bill
           </span>
-          <input type="text" class="compnt-input" id="bill" placeholder="0"/>
+          <input type="text" class="compnt-input" id="bill" placeholder="0" />
         </div>
-      <div class="bill-content-child">
-      <span class="compnt-label">
-        Select Tip %
-      </span>
-      <div class="bill-select-tip">
-        <button class="compnt-btn bill-btn" data-btn-value="5">5% </button>
-        <button class="compnt-btn bill-btn" data-btn-value="10">10%</button>
-        <button class="compnt-btn bill-btn" data-btn-value="15">15%</button>
-        <button class="compnt-btn bill-btn" data-btn-value="25">25%</button>
-        <button class="compnt-btn bill-btn" data-btn-value="50">50%</button>
-        <button class="compnt-btn bill-btn custom" data-btn-value="5">Custom</button>
-      </div>
-     </div>
-    
-      <div class="bill-content-child">
-        <span class="compnt-label">
-          Number of People
-        </span>
-        <input type="text" class="compnt-input" id="people" placeholder="0"/>
-      </div>
-        
-       
-      </div>
-      <div class="tip-content">
-        <div classs="tip-amount">
-          <span  class="compnt-label"> Tip Amount</span>
-          <span class="compnt-sub-label">/ person</span> 
-          <strong class="compnt-result-value " id="tip-amount-value"></strong>
+        <div class="bill-content-child">
+          <span class="compnt-label">
+            Select Tip %
+          </span>
+          <div class="bill-select-tip">
+            <button class="compnt-btn bill-btn" data-btn-value="5">5% </button>
+            <button class="compnt-btn bill-btn" data-btn-value="10">10%</button>
+            <button class="compnt-btn bill-btn" data-btn-value="15">15%</button>
+            <button class="compnt-btn bill-btn" data-btn-value="25">25%</button>
+            <button class="compnt-btn bill-btn" data-btn-value="50">50%</button>
+            <button class="compnt-btn bill-btn custom" data-btn-value="5">Custom</button>
+          </div>
         </div>
-        <div classs="tip-amount">
-          <span  class="label-title"> Tip Amount</span>
-          <span class="compnt-sub-label">/ person</span> 
-          <strong class="compnt-result-value" id="tip-total-value"> </strong>
+
+        <div class="bill-content-child">
+          <span class="compnt-label">
+            Number of People
+          </span>
+          <input type="text" class="compnt-input" id="people" placeholder="0" />
         </div>
-        <button class="compnt-btn">Reset</button>
+
 
       </div>
-      </section>
+      <div class="tip-content">
+        <div class="tip-amount">
+          <div>
+            <span class="compnt-label tip-label"> Tip Amount</span>
+            <span class="compnt-sub-label">/ person</span>
+          </div>
+          <strong class="compnt-result-value " id="tip-amount-value"></strong>
+        </div>
+        <div class="tip-amount">
+          <div>
+            <span class="compnt-label tip-label"> Tip Amount</span>
+            <span class="compnt-sub-label">/ person</span>
+          </div>
+
+          <strong class="compnt-result-value" id="tip-total-value"> </strong>
+        </div>
+        <button class="compnt-btn btn-reset">Reset</button>
+
+      </div>
+    </section>
     </section>
 
   </div>
-<script>
- 
-  const billBtns = document.querySelectorAll('.bill-btn');
-  const tipApmountTxt = document.querySelectorAll('#tip-amount-value');
-  const totalTxt = document.querySelectorAll('#tip-total-value');
+  <script>
 
-  tipApmountTxt[0].innerHTML = Number.parseFloat(0).toFixed(2)
-  totalTxt[0].innerHTML = Number.parseFloat(0).toFixed(2)
-  
-  console.log(tipApmountTxt)
+    const billBtns = document.querySelectorAll('.bill-btn');
+    const tipApmountTxt = document.querySelectorAll('#tip-amount-value');
+    const totalTxt = document.querySelectorAll('#tip-total-value');
 
-  billBtns.forEach(btn => {
-    
-    btn.addEventListener('click', function() {
-      const numberPeople = Number.parseInt(document.querySelector('#people').value);
-      const bill = Number.parseFloat(document.querySelector('#bill').value);
-      const tipAmount =Math.floor((bill * (Number.parseInt(btn.dataset.btnValue)/100)) / numberPeople)
-      const total = tipAmount + (bill / numberPeople)
-  
-      tipApmountTxt.innerHTML = tipAmount.toFixed(2)
-      totalTxt.innerHTML = Math.floor(total).toFixed(2)
+    tipApmountTxt[0].innerHTML = Number.parseFloat(0).toFixed(2)
+    totalTxt[0].innerHTML = Number.parseFloat(0).toFixed(2)
 
-      console.log(tipAmount.toFixed(2))
+    billBtns.forEach(btn => {
+
+      btn.addEventListener('click', function () {
+        const numberPeople = Number.parseInt(document.querySelector('#people').value);
+        const bill = Number.parseFloat(document.querySelector('#bill').value);
+        const tipAmount = (bill * (Number.parseInt(btn.dataset.btnValue) / 100)) / numberPeople;
+        const total = tipAmount + (bill / numberPeople)
+
+        tipApmountTxt[0].innerHTML = tipAmount.toFixed(2)
+        totalTxt[0].innerHTML = total.toFixed(2)
+
+      })
     })
-  })
 
-</script>
+  </script>
 </body>
+
 </html>
