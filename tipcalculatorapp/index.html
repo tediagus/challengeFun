@@ -106,7 +106,34 @@
 
       padding-right: 10px;
       width: 95%;
+      
     }
+
+    .amount,
+    .participant
+     {
+      position: relative;
+    }
+
+    .amount::before {
+      position: absolute;
+      background: red;
+      content: "dqsdqsdqs";
+      width: 100%;
+      height: 100%;
+      
+    }
+
+    .participant ::before{
+      position: absolute;
+      content: '';
+      height: 24px;
+      width: 24px;
+      left : 0;
+      background-color: var(--very-dark-cyan);
+    }
+
+
 
     .compnt-btn {
       width: 100%;
@@ -117,6 +144,7 @@
       border: none;
       border-radius: 5px;
     }
+
 
     .bill-btn {
       flex-grow: 1;
@@ -129,6 +157,10 @@
       margin-top: 5px
     }
 
+    .active {
+      background-color: var(--strong-cyan);
+      color: var(--very-dark-cyan)
+    }
 
     .custom {
       background-color: var(--Light-grayish-cyan2);
@@ -167,6 +199,8 @@
       background-color: var(--strong-cyan);
       text-transform: uppercase;
     }
+
+
 
     @media screen and (min-width:691px) {
 
@@ -207,6 +241,8 @@
         right: 0;
         left: 35px;
       }
+
+      
     }
   </style>
 </head>
@@ -221,7 +257,7 @@
           <span class="compnt-label">
             Bill
           </span>
-          <input type="text" class="compnt-input" id="bill" placeholder="0" />
+          <input type="text" class="compnt-input amount" id="bill" placeholder="0" />
         </div>
         <div class="bill-content-child">
           <span class="compnt-label">
@@ -241,7 +277,7 @@
           <span class="compnt-label">
             Number of People
           </span>
-          <input type="text" class="compnt-input" id="people" placeholder="0" />
+          <input type="text" class="compnt-input participant " id="people" placeholder="0" />
         </div>
 
 
@@ -272,26 +308,49 @@
   <script>
 
     const billBtns = document.querySelectorAll('.bill-btn');
-    const tipApmountTxt = document.querySelectorAll('#tip-amount-value');
-    const totalTxt = document.querySelectorAll('#tip-total-value');
+    const tipApmountTxt = document.querySelector('#tip-amount-value')  ;
+    const totalTxt = document.querySelector('#tip-total-value') ;
+    const btnReset = document.querySelector('.btn-reset')
 
-    tipApmountTxt[0].innerHTML = Number.parseFloat(0).toFixed(2)
-    totalTxt[0].innerHTML = Number.parseFloat(0).toFixed(2)
+    btnReset.addEventListener('click', function(){
+   
+      removeActiveBill()
+      tipApmountTxt.innerHTML = Number.parseFloat(0).toFixed(2)
+      totalTxt.innerHTML = Number.parseFloat(0).toFixed(2)  
+      document.querySelector('.amount').value  = 0 ;
+      document.querySelector('.participant').value  = 0 ;
+    })
+
+    tipApmountTxt.innerHTML = Number.parseFloat(0).toFixed(2)
+    totalTxt.innerHTML = Number.parseFloat(0).toFixed(2)
 
     billBtns.forEach(btn => {
 
       btn.addEventListener('click', function () {
+        removeActiveBill(billBtns.length +1)    
+
+        btn.classList.add('active')
+
         const numberPeople = Number.parseInt(document.querySelector('#people').value);
         const bill = Number.parseFloat(document.querySelector('#bill').value);
         const tipAmount = (bill * (Number.parseInt(btn.dataset.btnValue) / 100)) / numberPeople;
         const total = tipAmount + (bill / numberPeople)
-
-        tipApmountTxt[0].innerHTML = tipAmount.toFixed(2)
-        totalTxt[0].innerHTML = total.toFixed(2)
+   
+        tipApmountTxt.innerHTML = formatNumber(tipAmount)
+        totalTxt.innerHTML = formatNumber(total)
 
       })
     })
 
+    function removeActiveBill() {
+      billBtns.forEach((btn, index) => {
+        btn.classList.remove('active')
+      })
+    }
+
+    function formatNumber(nb){
+        return new Intl.NumberFormat(window.navigator.language, {  useGrouping: false, minimumFractionDigits: 0, maximumFractionDigits: 2}).format(nb) 
+      }
   </script>
 </body>
 
